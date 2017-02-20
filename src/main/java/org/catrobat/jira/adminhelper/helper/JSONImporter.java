@@ -63,7 +63,7 @@ public class JSONImporter {
             }
             //if the device has id -1 its is only a Hardware modle without any devices allocated to it
             if(d.getId() == -1) {
-                System.out.println("only model without devices found, continue");
+                //System.out.println("only model without devices found, continue");
                 continue;
             }
 
@@ -71,13 +71,13 @@ public class JSONImporter {
                     d.getReceivedFrom(), d.getReceivedDate(),d.getUsefulLiveOfAsset());
 
             if(d.getSortedOutDate() != null) {
-                System.out.println("device has been sorted out");
+                //System.out.println("device has been sorted out");
                 deviceService.sortOutDevice(current_device.getID(), d.getSortedOutDate(), d.getSortedOutComment());
             }
 
             List<JsonLending> lendings = d.getLendings();
-            System.out.println("lendings are: ");
-            System.out.println(gson.toJson(lendings));
+           /* System.out.println("lendings are: ");
+            System.out.println(gson.toJson(lendings));*/
             List<JsonDeviceComment> comments = d.getComments();
 
             for(JsonLending lending : lendings) {
@@ -86,7 +86,7 @@ public class JSONImporter {
                 ApplicationUser issuer = userManager.getUserByName(lending.getLentOutIssuer());
 
                 if(lender.getKey() == null || issuer.getKey() == null){
-                    System.out.println("key is null");
+                    //System.out.println("key is null");
                     continue;
                 }
                 Lending temp = lendingService.lendOut(current_device, lender.getKey(), issuer.getKey(),
@@ -107,14 +107,14 @@ public class JSONImporter {
                 }
             }
         }
-        System.out.println("Imported all Devices");
+        //System.out.println("Imported all Devices");
         hardware_model_mapping.clear();
         return true;
     }
 
     public boolean importConfig(JsonConfig config)
     {
-        System.out.println("importing config");
+        //System.out.println("importing config");
         try {
             HelperUtil.saveGithubConfig(config, configService);
             HelperUtil.saveConfig(config, configService);
