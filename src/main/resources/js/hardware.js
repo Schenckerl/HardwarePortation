@@ -57,7 +57,6 @@ function initHardwareVelocityReadonly(baseUrl) {
     fillOutAllTables(baseUrl);
     handleEvents(baseUrl);
     initIndividualRelatedLendingTab(baseUrl);
-    //initGroupUserSearchField(baseUrl);
 }
 
 function initHardwareVelocityAdmin(baseUrl)
@@ -66,8 +65,6 @@ function initHardwareVelocityAdmin(baseUrl)
     fillOutAllTables(baseUrl);
     handleEvents(baseUrl);
     initIndividualRelatedLendingTab(baseUrl);
-    //initGroupUserSearchField(baseUrl);
-    //initHdwReadOnlyUsersAndGroups(baseUrl);
 }
 
 function fillOutAllTables(baseUrl) {

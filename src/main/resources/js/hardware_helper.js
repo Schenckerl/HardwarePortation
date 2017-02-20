@@ -17,14 +17,8 @@ function checkPremission(baseUrl)
         url: baseUrl + "/rest/admin-helper/latest/hardware/getReadOnlyStatus",
         type: "GET",
         success: function (data) {
-            if(data.isReadOnly === true)
-            {
+            if(data.isReadOnly === true) {
                 initHardwareVelocityReadonly(baseUrl);
-/*                AJS.messages.hint({
-                    title:"Information!",
-                    body:"You were granted Read Only access, you may not change any settings! <br>"+
-                    "For further information contact your Jira Admin."
-                })*/
             }
             else{
                 initHardwareVelocityAdmin(baseUrl);

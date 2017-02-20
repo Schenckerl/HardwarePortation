@@ -1,7 +1,9 @@
 package org.catrobat.jira.adminhelper.helper;
 
 import com.atlassian.jira.bc.issue.comment.CommentService;
+import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.issue.comments.Comment;
+import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.jira.user.util.UserManager;
 import com.google.gson.Gson;
 import org.catrobat.jira.adminhelper.activeobject.*;
@@ -74,10 +76,20 @@ public class JSONImporter {
             }
 
             List<JsonLending> lendings = d.getLendings();
+            System.out.println("lendings are: ");
+            System.out.println(gson.toJson(lendings));
             List<JsonDeviceComment> comments = d.getComments();
 
             for(JsonLending lending : lendings) {
-                Lending temp = lendingService.lendOut(current_device,lending.getLentOutBy(), lending.getLentOutIssuer(),
+                UserManager userManager = ComponentAccessor.getUserManager();
+                ApplicationUser lender = userManager.getUserByName(lending.getLentOutBy());
+                ApplicationUser issuer = userManager.getUserByName(lending.getLentOutIssuer());
+
+                if(lender.getKey() == null || issuer.getKey() == null){
+                    System.out.println("key is null");
+                    continue;
+                }
+                Lending temp = lendingService.lendOut(current_device, lender.getKey(), issuer.getKey(),
                         lending.getPurpose(), lending.getComment(), lending.getBegin());
                 if(lending.getEnd() != null) {
                     lendingService.bringBack(temp, lending.getPurpose(), lending.getComment(), lending.getEnd());
